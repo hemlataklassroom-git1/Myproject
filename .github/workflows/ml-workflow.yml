@@ -1,0 +1,28 @@
+name: Train ML Model
+
+on:
+  push:
+    branches: [ main ]        # Runs when you push code to main branch
+  schedule:
+    - cron: '0 2 * * *'       # Runs every day at 2 AM (UTC time)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest     # Uses a Linux machine on GitHub
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3   # Step 1: Get your code
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'     # Step 2: Install Python
+
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt   # Step 3: Install needed packages
+
+    - name: Run Training Script
+      run: |
+        python train_model.py             # Step 4: Train your model
